@@ -115,7 +115,9 @@ module.exports = kind({
               kind: ToggleItem,
               name: 'autostartToggle',
               content: 'Autostart',
-              disabled: false
+              checked: false,
+              disabled: true,
+              onchange: "autostartToggle"
             },
             {
               kind: ExpandablePicker, name: 'quirksPicker', noneText: 'None Selected', content: 'Device quirks',
@@ -211,6 +213,7 @@ module.exports = kind({
     { kind: LunaService, name: 'getSettings', service: 'luna://org.webosbrew.piccap.service', method: 'getSettings', onResponse: 'onGetSettings', onError: 'onGetSettings' },
     { kind: LunaService, name: 'setSettings', service: 'luna://org.webosbrew.piccap.service', method: 'setSettings', onResponse: 'onSetSettings', onError: 'onSetSettings' },
 
+    { kind: LunaService, name: 'autostartStatusCheck', service: 'luna://org.webosbrew.hbchannel.service', method: 'exec', onResponse: 'onAutostartCheck', onError: 'onAutostartCheck'},
     { kind: LunaService, name: 'exec', service: 'luna://org.webosbrew.hbchannel.service', method: 'exec', onResponse: 'onExec', onError: 'onExec' },
     { kind: LunaService, name: 'execSilent', service: 'luna://org.webosbrew.hbchannel.service', method: 'exec' },
     { kind: LunaService, name: 'systemReboot', service: 'luna://org.webosbrew.hbchannel.service', method: 'reboot' },
@@ -235,6 +238,7 @@ module.exports = kind({
   elevatedStatus: "unknown",
 
   initDone: false,
+  autostartStatusChecked: false,
   
   bindings: [
     // Settings
@@ -245,6 +249,9 @@ module.exports = kind({
     { from: "height", to: '$.heightInput.value', oneWay: false },
     { from: "fps", to: '$.fpsInput.value', oneWay: false },
     { from: "vsync", to: '$.vsyncToggle.checked', oneWay: false },
+
+    // Autostart
+    { from: "autostartStatusChecked", to: '$.autostartToggle.disabled', transform: not},
     { from: "autostart", to: '$.autostartToggle.checked', oneWay: false },
 
     // Status
@@ -271,6 +278,7 @@ module.exports = kind({
   },
   // Spawned from this.create() with a little delay
   doStartup: function() {
+    this.checkAutostart();
     this.set('resultText', 'Startup routine started...');
     var self = this;
     // Start to continuosly poll service status
@@ -294,6 +302,12 @@ module.exports = kind({
   stop: function () {
     console.info("Stop clicked");
     this.$.stop.send({});
+  },
+  checkAutostart: function () {
+    console.info("checkAutostart");
+    this.$.autostartStatusCheck.send({
+      command: 'readlink ' + linkPath,
+    });
   },
   exec: function (cmd) {
     console.info("exec called");
@@ -345,8 +359,7 @@ module.exports = kind({
       "backend": videoBackend,
       "uibackend": uiBackend,
       "novideo": noVideo,
-      "nogui": noGui,
-      "autostart": this.autostart,
+      "nogui": noGui
     }
 
     console.log("Saving settings", settings);
@@ -402,6 +415,13 @@ module.exports = kind({
       this.set('resultText', 'Trying to elevate...');
       this.elevate();
     }
+  },
+  onAutostartCheck: function (sender, evt) {
+    console.info("onAutostartCheck");
+    console.info(sender, evt);
+    // this.$.result.set('content', JSON.stringify(evt.data));
+    this.set('autostart', (evt.returnValue && evt.stdoutString && evt.stdoutString.trim() == autostartFilepath));
+    this.set('autostartStatusChecked', true);
   },
   onSetSettings: function (sender, evt) {
     console.info("onSetSettings");
@@ -469,7 +489,6 @@ module.exports = kind({
     this.set('width', evt.width);
     this.set('height', evt.height);
     this.set('vsync', evt.vsync);
-    this.set('autostart', evt.autostart);
   },
   onDaemonStart: function (sender, evt) {
     console.info("onDaemonStart");
@@ -487,6 +506,15 @@ module.exports = kind({
       this.set('resultText', "Daemon stopped");
     } else {
       this.set('resultText', "Daemon failed to stop");
+    }
+  },
+  autostartToggle: function (sender) {
+    console.info("toggle:", sender);
+
+    if (sender.active) {
+      this.exec('mkdir -p /var/lib/webosbrew/init.d && ln -sf ' + autostartFilepath + ' ' + linkPath);
+    } else {
+      this.exec('rm -rf ' + linkPath);
     }
   },
 });
