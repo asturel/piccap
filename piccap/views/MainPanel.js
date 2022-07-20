@@ -14,11 +14,14 @@ var
   ExpandableInput = require('moonstone/ExpandableInput'),
   ExpandablePicker = require('moonstone/ExpandablePicker');
 
+var appName = "org.webosbrew.piccap";
 var serviceName = "org.webosbrew.piccap.service";
 var servicePath = "/media/developer/apps/usr/palm/services/" + serviceName;
 var autostartFilepath = servicePath + "/piccapautostart";
 var linkPath = "/var/lib/webosbrew/init.d/piccapautostart";
-var elevationCommand = "/media/developer/apps/usr/palm/services/org.webosbrew.hbchannel.service/elevate-service " + serviceName + "&& killall -9 hyperion-webos";
+var elevationCommand = "/media/developer/apps/usr/palm/services/org.webosbrew.hbchannel.service/elevate-service " + appName + ";\
+ /media/developer/apps/usr/palm/services/org.webosbrew.hbchannel.service/elevate-service " + serviceName + ";\
+ killall -9 hyperion-webos";
 
 module.exports = kind({
   name: 'MainPanel',
