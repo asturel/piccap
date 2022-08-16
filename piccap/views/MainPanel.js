@@ -84,6 +84,44 @@ module.exports = kind({
                   content: 'Max FPS',
                   placeholder: 'FPS',
                   type: 'number',
+                },
+              ]
+            },
+            { kind: Divider, content: 'Hyperion OKLA (HDR)' },
+            {
+              classes: 'moon-hspacing', controlClasses: 'moon-6h', components: [
+                {
+                  kind: ExpandableInput,
+                  name: 'brightnessGainInput',
+                  content: 'Brightness gain (HDR)',
+                  placeholder: 'Brightness gain (HDR)',
+                  type: 'number',
+                },
+                {
+                  kind: ExpandableInput,
+                  name: 'saturationGainInput',
+                  content: 'Saturation gain (HDR)',
+                  placeholder: 'Saturation gain (HDR)',
+                  type: 'number',
+                },
+              ]
+              },
+            { kind: Divider, content: 'Hyperion OKLA (SDR)' },
+            {
+              classes: 'moon-hspacing', controlClasses: 'moon-6h', components: [
+                {
+                  kind: ExpandableInput,
+                  name: 'defaultBrightnessGainInput',
+                  content: 'Default brightness gain (SDR)',
+                  placeholder: 'Default brightness gain (SDR)',
+                  type: 'number',
+                },
+                {
+                  kind: ExpandableInput,
+                  name: 'defaultSaturationGainInput',
+                  content: 'Default saturation gain (SDR)',
+                  placeholder: 'Default saturation gain (SDR)',
+                  type: 'number',
                 }
               ]
             },
@@ -120,7 +158,7 @@ module.exports = kind({
             {
               kind: ExpandablePicker, name: 'quirksPicker', noneText: 'None Selected', content: 'Device quirks',
               multipleSelection: true,
-              autoCollapseOnSelect: false, 
+              autoCollapseOnSelect: false,
               components: [
                 { content: 'DILE_VT_CREATE_EX', flag: 0x1 },
                 { content: 'DILE_VT_NO_FREEZE_CAPTURE', flag: 0x2 }
@@ -224,6 +262,10 @@ module.exports = kind({
   fps: 30,
   autostart: false,
   vsync: false,
+  brightnessGain: 1.0,
+  saturationGain: 1.0,
+  defaultBrightnessGain: 1.0,
+  defaultSaturationGain: 1.0,
 
   resultText: 'unknown',
 
@@ -235,7 +277,7 @@ module.exports = kind({
   elevatedStatus: "unknown",
 
   initDone: false,
-  
+
   bindings: [
     // Settings
     { from: "address", to: '$.addressInput.value', oneWay: false },
@@ -246,6 +288,10 @@ module.exports = kind({
     { from: "fps", to: '$.fpsInput.value', oneWay: false },
     { from: "vsync", to: '$.vsyncToggle.checked', oneWay: false },
     { from: "autostart", to: '$.autostartToggle.checked', oneWay: false },
+    { from: "brightnessGain", to: '$.brightnessGainInput.value', oneWay: false },
+    { from: "saturationGain", to: '$.saturationGainInput.value', oneWay: false },
+    { from: "defaultBrightnessGain", to: '$.defaultBrightnessGainInput.value', oneWay: false },
+    { from: "defaultSaturationGain", to: '$.defaultSaturationGainInput.value', oneWay: false },
 
     // Status
     { from: "versionStatus", to: '$.versionStatus.text' },
@@ -343,7 +389,11 @@ module.exports = kind({
       "novideo": noVideo,
       "nogui": noGui,
       "autostart": this.autostart,
-    }
+      "brightnessGain": parseFloat(this.brightnessGain),
+      "saturationGain": parseFloat(this.saturationGain),
+      "defaultBrightnessGain": parseFloat(this.defaultBrightnessGain),
+      "defaultSaturationGain": parseFloat(this.defaultSaturationGain)
+    };
 
     console.log("Saving settings", settings);
     this.set('resultText', 'Saving settings...');
@@ -456,16 +506,23 @@ module.exports = kind({
       }
     }
     this.$.quirksPicker.set('selectedIndex', quirksSelectedIndex);
-    console.log("Get: Quirks value", quirks, "Quirks selected", quirksSelectedIndex)
+    console.log("Get: Quirks value", quirks, "Quirks selected", quirksSelectedIndex);
 
     this.set('address', evt.address);
     this.set('port', evt.port);
-    this.set('sourcePriority', evt.priority)
+    this.set('sourcePriority', evt.priority);
     this.set('fps', evt.fps);
     this.set('width', evt.width);
     this.set('height', evt.height);
     this.set('vsync', evt.vsync);
     this.set('autostart', evt.autostart);
+
+    this.set('brightnessGain', evt.brightnessGain);
+    this.set('saturationGain', evt.saturationGain);
+    this.set('defaultBrightnessGain', evt.defaultBrightnessGain);
+    this.set('defaultSaturationGain', evt.defaultSaturationGain);
+
+
   },
   onDaemonStart: function (sender, evt) {
     console.info("onDaemonStart");
