@@ -87,44 +87,6 @@ module.exports = kind({
                 },
               ]
             },
-            { kind: Divider, content: 'Hyperion OKLA (HDR)' },
-            {
-              classes: 'moon-hspacing', controlClasses: 'moon-6h', components: [
-                {
-                  kind: ExpandableInput,
-                  name: 'brightnessGainInput',
-                  content: 'Brightness gain (HDR)',
-                  placeholder: 'Brightness gain (HDR)',
-                  type: 'number',
-                },
-                {
-                  kind: ExpandableInput,
-                  name: 'saturationGainInput',
-                  content: 'Saturation gain (HDR)',
-                  placeholder: 'Saturation gain (HDR)',
-                  type: 'number',
-                },
-              ]
-              },
-            { kind: Divider, content: 'Hyperion OKLA (SDR)' },
-            {
-              classes: 'moon-hspacing', controlClasses: 'moon-6h', components: [
-                {
-                  kind: ExpandableInput,
-                  name: 'defaultBrightnessGainInput',
-                  content: 'Default brightness gain (SDR)',
-                  placeholder: 'Default brightness gain (SDR)',
-                  type: 'number',
-                },
-                {
-                  kind: ExpandableInput,
-                  name: 'defaultSaturationGainInput',
-                  content: 'Default saturation gain (SDR)',
-                  placeholder: 'Default saturation gain (SDR)',
-                  type: 'number',
-                }
-              ]
-            },
             {
               kind: ToggleItem,
               name: 'vsyncToggle',
@@ -217,25 +179,80 @@ module.exports = kind({
                 },
               ]
             },
-            { kind: Divider, content: 'Service control' },
+            { kind: FittableColumns, classes: 'enyo-stretch', fit: false, components: [
             {
               classes: 'moon-hspacing', controlClasses: 'moon-4h', components: [
-                { kind: Item, name: 'startButton', content: 'Start', ontap: "start" },
-                { kind: Item, name: 'stopButton', content: 'Stop', ontap: "stop" }
-              ]
-            },
-            { kind: Divider, content: 'Settings' },
-            {
-              classes: 'moon-hspacing', controlClasses: 'moon-4h', components: [
-                { kind: Item, name: 'saveButton', content: 'Save', ontap: "saveSettings" },
-                { kind: Item, name: 'resetButton', content: 'Reset', ontap: "resetSettings" },
-              ]
-            },
-            { kind: Divider, content: 'System' },
-            { kind: Item, name: 'rebootButton', content: 'Reboot', ontap: "reboot" },
+                {
+                  classes: 'moon-vspacing', controlClasses: 'moon-2h', components: [
+                    { kind: Divider, content: 'Service control' },
+                    {
+                      classes: 'moon-hspacing', controlClasses: 'moon-2h', components: [
+                        { kind: Item, name: 'startButton', content: 'Start', ontap: "start" },
+                        { kind: Item, name: 'stopButton', content: 'Stop', ontap: "stop" }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  classes: 'moon-vspacing', controlClasses: 'moon-2h', components: [
+                    { kind: Divider, content: 'Settings' },
+                    {
+                      classes: 'moon-hspacing', controlClasses: 'moon-2h', components: [
+                        { kind: Item, name: 'saveButton', content: 'Save', ontap: "saveSettings" },
+                        { kind: Item, name: 'resetButton', content: 'Reset', ontap: "resetSettings" },
+                      ]
+                    }
+                  ]
+                },
+                {
+                  classes: 'moon-vspacing', controlClasses: 'moon-2h', components: [
+                    { kind: Divider, content: 'System' },
+                    { kind: Item, name: 'rebootButton', content: 'Reboot', ontap: "reboot" },
+                  ]
+                },
+            ]},
+          ]},
+
+          { kind: Divider, content: 'Hyperion Okla HDR' },
+          {
+            classes: 'moon-hspacing', controlClasses: 'moon-6h', components: [
+              {
+                kind: ExpandableInput,
+                name: 'brightnessGainInput',
+                content: 'Brightness gain',
+                placeholder: 'Brightness gain',
+                type: 'number',
+              },
+              {
+                kind: ExpandableInput,
+                name: 'saturationGainInput',
+                content: 'Saturation gain',
+                placeholder: 'Saturation gain',
+                type: 'number',
+              },
+            ]
+          },
+          { kind: Divider, content: 'Hyperion Okla SDR' },
+          {
+            classes: 'moon-hspacing', controlClasses: 'moon-6h', components: [
+              {
+                kind: ExpandableInput,
+                name: 'defaultBrightnessGainInput',
+                content: 'Brightness gain',
+                placeholder: 'Brightness gain',
+                type: 'number',
+              },
+              {
+                kind: ExpandableInput,
+                name: 'defaultSaturationGainInput',
+                content: 'Saturation gain',
+                placeholder: 'Saturation gain',
+                type: 'number',
+              },
           ]
-        }
-      ]
+          },
+        ]},
+      ],
     },
     {
       components: [
