@@ -70,7 +70,7 @@ jobs:
           -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_FILE} \
           -DCMAKE_BUILD_TYPE=Release
         make
-    
+
     - name: List files
       run: find .
 
@@ -139,22 +139,40 @@ jobs:
 
       - name: List files (frontend)
         run: find ./dist
-      
+
       - name: List files (native)
         run: find ./dist-service
 
       - name: Package
-        run: mkdir -p build && ares-package ./dist/ ./dist-service -o ./build
+        run: ares-package ./dist/ ./dist-service
+
+      - name: Generate manifest
+        run: npm run gen-manifest
 
       - name: Upload piccap ipk
         uses: actions/upload-artifact@v2
         with:
           name: piccap_ipk
           path: |
-            build/*.ipk
+            ${{github.workspace}}/*.ipk
 
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
+      - uses: marvinpinto/action-automatic-releases@latest
+        if: "github.ref == 'refs/heads/master'"
         with:
-          files: ./build/*.ipk
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: latest
+          prerelease: true
+          title: "Development Build"
+          files: |
+            ${{github.workspace}}/*.ipk
+            ${{github.workspace}}/org.webosbrew.piccap.manifest.json
+
+      - uses: marvinpinto/action-automatic-releases@latest
+        if: "startsWith(github.ref, 'refs/tags/v')"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          title: ${{ github.ref_name }}
+          files: |
+            ${{github.workspace}}/*.ipk
+            ${{github.workspace}}/org.webosbrew.piccap.manifest.json
