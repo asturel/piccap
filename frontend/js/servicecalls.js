@@ -157,6 +157,12 @@ async function getSettings() {
   document.getElementById('checkSettingsVSync').checked = config.vsync;
   document.getElementById('checkSettingsAutostart').checked = config.autostart;
 
+  document.getElementById('checkSettingsOkla').checked = true; //TODO: add hyperion-webos
+  document.getElementById('txtInputSettingsBrightnessGain').value = parseFloat(config.brightnessGain);
+  document.getElementById('txtInputSettingsSaturationGain').value = parseFloat(config.saturationGain);
+  document.getElementById('txtInputSettingsDefaultBrightnessGain').value = parseFloat(config.defaultBrightnessGain);
+  document.getElementById('txtInputSettingsDefaultSaturationGain').value = parseFloat(config.defaultSaturationGain);
+
   console.info('Done!');
   document.getElementById('txtInfoState').innerHTML = 'Settings loaded';
   getStatus();
@@ -279,6 +285,12 @@ window.serviceSaveSettings = async () => {
 
     vsync: document.getElementById('checkSettingsVSync').checked,
     autostart: document.getElementById('checkSettingsAutostart').checked,
+
+    hyperionOkla:  document.getElementById('checkSettingsOkla').checked,
+    brightnessGain: parseFloat(document.getElementById('txtInputSettingsBrightnessGain').value),
+    saturationGain: parseFloat(document.getElementById('txtInputSettingsSaturationGain').value),
+    defaultBrightnessGain: parseFloat(document.getElementById('txtInputSettingsDefaultBrightnessGain').value),
+    defaultSaturationGain: parseFloat(document.getElementById('txtInputSettingsDefaultSaturationGain').value)
   };
 
   console.info(config);

@@ -39,7 +39,7 @@
           <button onclick="serviceReload()" id="btnServiceReload">Reload</button>
         </div>
       </div>
-      
+
       <div id="settings" class="settings">
         <div class="settingItems settingItemsNormal" id="settingItemsNormal">
           <ul>
@@ -84,7 +84,7 @@
               <p>Maximal FPS</p>
               <input type="text" id="txtInputSettingsFPS"/>
             </li>
-          </ul><br/> 
+          </ul><br/>
           <ul>
             <li><p>_______________________________________________</p></li>
           </ul><br/>
@@ -113,7 +113,47 @@
                   <label for="checkSettingsVSync">VSync<input type="checkbox" id="checkSettingsVSync"/></label>
                 </div>
               </li>
-            </ul><br/>
+            </il>
+          </ul><br/>
+
+          <ul>
+            <li><p>_______________________________________________</p></li>
+          </ul><br/>
+          <ul>
+            <li>
+              <div class="checkboxes checklabel">
+                <label for="checkSettingsOkla"><b>Hyperion Okla brightness & saturation gain</b><input type="checkbox" id="checkSettingsOkla"/></label><br/>
+              </div>
+            </li>
+          </ul><br/>
+          <ul>
+            <li><p><b>HDR</b></p></li>
+          </ul><br/>
+          <ul>
+            <li>
+              <p>Brightness gain</p>
+              <input type="number" id="txtInputSettingsBrightnessGain" min="0" max="4" step="0.1"/>
+            </li>
+            <li>
+              <p>Saturation gain</p>
+              <input type="number" id="txtInputSettingsSaturationGain" min="0" max="4" step="0.1"/>
+            </li>
+          </ul><br/>
+          <ul>
+            <li><p><b>SDR</b></p></li>
+          </ul><br/>
+          <ul>
+            <li>
+              <p>Brightness gain</p>
+              <input type="number" id="txtInputSettingsDefaultBrightnessGain" min="0" max="4" step="0.1"/>
+            </li>
+            <li>
+              <p>Saturation gain</p>
+              <input type="number" id="txtInputSettingsDefaultSaturationGain" min="0" max="4" step="0.1"/>
+            </li>
+          </ul>
+
+          <br/>
         </div>
         <div class="settingItems settingItemsAdv" id="settingItemsAdv">
            <ul>
@@ -162,7 +202,7 @@
           <button onclick="tvReboot()" id="btnSettingsReboot">Reboot</button>
         </div>
       </div>
-      
+
       <div id="logs" class="logs">
         <div class="upperTab">
           <p>Some very simple experimental feature to collect logs. Setup logging is needed after a reboot.<br/>Will be reworked in newer versions. Press the load button to get last 200 log entries.</p>
@@ -185,7 +225,7 @@
           </textarea>
         </div>
       </div>
-      
+
       <div id="about" class="About">
         <div class="sub_title">
           <p>Some info about this project</p>
@@ -202,7 +242,7 @@
           <ul>
             <li>
               <p><br/>Feel free to raise an issue or pull request, or come to the OpenLG-Discord, if you have some questions.</p>
-            </li> 
+            </li>
           </ul><br/>
           <ul>
             <li><p>GitHub-Links: <a href="https://github.com/webosbrew/hyperion-webos">github.com/webosbrew/hyperion-webos</a> | <a href="https://github.com/TBSniller/piccap">github.com/TBSniller/piccap</a></p></li>
@@ -232,18 +272,18 @@
     <div class="status">
       <p>State: </p>
       <p id="txtInfoState">Loading..</p>
-      
+
       <p>| Receiver: </p>
       <p id="txtInfoReceiver">n/a</p>
-      
+
       <!--- UI --->
       <p>| UI: </p>
       <p id="txtInfoUI">n/a</p>
-      
+
       <!--- Video --->
       <p>| Video: </p>
       <p id="txtInfoVideo">n/a</p>
-      
+
       <p>| FPS: </p>
       <p id="txtInfoFPS">n/a</p>
     </div>

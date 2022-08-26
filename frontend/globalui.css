@@ -204,7 +204,7 @@ nav .menu{
   margin-right: 10px;
 }
 
-.settingItems input[type="text"]{
+.settingItems input[type="text"], .settingItems input[type="number"] {
   border-style: none;
   border-radius: 5px;
   height: 30px;
