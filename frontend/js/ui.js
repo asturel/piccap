@@ -6,11 +6,13 @@ window.switchView = function (view) {
   const settings = document.getElementById('settings');
   const logs = document.getElementById('logs');
   const about = document.getElementById('about');
+  const hyperion = document.getElementById('hyperion');
 
   const btnservice = document.getElementById('btnNavService');
   const btnsettings = document.getElementById('btnNavSettings');
   const btnlogs = document.getElementById('btnNavLogs');
   const btnabout = document.getElementById('btnNavAbout');
+  const btnhyperion = document.getElementById('btnNavHyperion');
 
   switch (view) {
     case 'service':
@@ -29,6 +31,10 @@ window.switchView = function (view) {
       about.style.display = 'none';
       btnabout.style.background = null;
       btnabout.style.color = null;
+
+      hyperion.style.display = 'none';
+      btnhyperion.style.background = null;
+      btnhyperion.style.color = null;
       break;
     case 'settings':
       service.style.display = 'none';
@@ -46,6 +52,10 @@ window.switchView = function (view) {
       about.style.display = 'none';
       btnabout.style.background = null;
       btnabout.style.color = null;
+
+      hyperion.style.display = 'none';
+      btnhyperion.style.background = null;
+      btnhyperion.style.color = null;
       break;
     case 'logs':
       service.style.display = 'none';
@@ -63,6 +73,10 @@ window.switchView = function (view) {
       about.style.display = 'none';
       btnabout.style.background = null;
       btnabout.style.color = null;
+
+      hyperion.style.display = 'none';
+      btnhyperion.style.background = null;
+      btnhyperion.style.color = null;
       break;
     case 'about':
       service.style.display = 'none';
@@ -80,6 +94,31 @@ window.switchView = function (view) {
       about.style.display = 'block';
       btnabout.style.background = 'white';
       btnabout.style.color = 'black';
+
+      hyperion.style.display = 'none';
+      btnhyperion.style.background = null;
+      btnhyperion.style.color = null;
+      break;
+    case 'hyperion':
+      service.style.display = 'none';
+      btnservice.style.background = null;
+      btnservice.style.color = null;
+
+      settings.style.display = 'none';
+      btnsettings.style.background = null;
+      btnsettings.style.color = null;
+
+      logs.style.display = 'none';
+      btnlogs.style.background = null;
+      btnlogs.style.color = null;
+
+      about.style.display = 'none';
+      btnabout.style.background = null;
+      btnabout.style.color = null;
+
+      hyperion.style.display = 'block';
+      btnhyperion.style.background = 'white';
+      btnhyperion.style.color = 'black';
       break;
     default:
       service.style.display = null;
@@ -166,5 +205,33 @@ getContributors('tbsniller', 'piccap');
 window.addEventListener('load', () => {
   /* eslint-disable no-undef */
   switchView('service');
+
+  const toggle = document.getElementById('toggle');
+  const body = document.body;
+
+  const enableDarkMode = () => {
+    body.classList.add("dark-theme");
+    localStorage.setItem("dark-mode", "enabled");
+    toggle.checked = true;
+  };
+
+  const disableDarkMode = () => {
+    body.classList.remove("dark-theme");
+    localStorage.setItem("dark-mode", "disabled");
+    toggle.checked = false;
+  };
+
+  toggle.addEventListener('input', e => {
+      const isChecked = e.target.checked;
+      if (isChecked) {
+        enableDarkMode();
+      } else {
+        disableDarkMode();
+      }
+  });
+  const darkMode = localStorage.getItem("dark-mode");
+  if (darkMode === "enabled") {
+    enableDarkMode(); // set state of darkMode on page load
+  }
   /* eslint-enable no-undef */
 });

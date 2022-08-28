@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark blue">
     <title>PicCap - Hyperion Sender App</title>
     <script src="webOSTVjs-1.2.4/webOSTV.js" charset="utf-8"></script>
     <script src="webOSTVjs-1.2.4/webOSTV-dev.js" charset="utf-8"></script>
@@ -20,8 +21,15 @@
         <ul>
           <li><button onclick="switchView('service')" id="btnNavService">Service</button></li>
           <li><button onclick="switchView('settings')" id="btnNavSettings">Settings</button></li>
+          <li><button onclick="switchView('hyperion')" id="btnNavHyperion">Hyperion</button></li>
           <li><button onclick="switchView('logs')" id="btnNavLogs">Logs</button></li>
           <li><button onclick="switchView('about')" id="btnNavAbout">About</button></li>
+          <li>
+            <div class="toggle">
+              <input type="checkbox" id="toggle" />
+              <label for="toggle"></label>
+            </div>
+          </li>
         </ul>
       </div>
     </nav>
@@ -116,43 +124,6 @@
             </il>
           </ul><br/>
 
-          <ul>
-            <li><p>_______________________________________________</p></li>
-          </ul><br/>
-          <ul>
-            <li>
-              <div class="checkboxes checklabel">
-                <label for="checkSettingsOkla"><b>Hyperion Okla brightness & saturation gain</b><input type="checkbox" id="checkSettingsOkla"/></label><br/>
-              </div>
-            </li>
-          </ul><br/>
-          <ul>
-            <li><p><b>HDR</b></p></li>
-          </ul><br/>
-          <ul>
-            <li>
-              <p>Brightness gain</p>
-              <input type="number" id="txtInputSettingsBrightnessGain" min="0" max="4" step="0.1"/>
-            </li>
-            <li>
-              <p>Saturation gain</p>
-              <input type="number" id="txtInputSettingsSaturationGain" min="0" max="4" step="0.1"/>
-            </li>
-          </ul><br/>
-          <ul>
-            <li><p><b>SDR</b></p></li>
-          </ul><br/>
-          <ul>
-            <li>
-              <p>Brightness gain</p>
-              <input type="number" id="txtInputSettingsDefaultBrightnessGain" min="0" max="4" step="0.1"/>
-            </li>
-            <li>
-              <p>Saturation gain</p>
-              <input type="number" id="txtInputSettingsDefaultSaturationGain" min="0" max="4" step="0.1"/>
-            </li>
-          </ul>
-
           <br/>
         </div>
         <div class="settingItems settingItemsAdv" id="settingItemsAdv">
@@ -191,6 +162,44 @@
                 </div>
               </li>
             </ul><br/>
+            <!--
+            <ul>
+              <li><p>_______________________________________________</p></li>
+            </ul><br/>
+            <ul>
+              <li>
+                <div class="checkboxes checklabel">
+                  <label for="checkSettingsOkla"><b>Hyperion Okla brightness & saturation gain</b><input type="checkbox" id="checkSettingsOkla"/></label><br/>
+                </div>
+              </li>
+            </ul><br/>
+            <ul>
+              <li><p><b>HDR</b></p></li>
+            </ul><br/>
+            <ul>
+              <li>
+                <p>Brightness gain</p>
+                <input type="number" id="txtInputSettingsBrightnessGain" min="0" max="4" step="0.1"/>
+              </li>
+              <li>
+                <p>Saturation gain</p>
+                <input type="number" id="txtInputSettingsSaturationGain" min="0" max="4" step="0.1"/>
+              </li>
+            </ul><br/>
+            <ul>
+              <li><p><b>SDR</b></p></li>
+            </ul><br/>
+            <ul>
+              <li>
+                <p>Brightness gain</p>
+                <input type="number" id="txtInputSettingsDefaultBrightnessGain" min="0" max="4" step="0.1"/>
+              </li>
+              <li>
+                <p>Saturation gain</p>
+                <input type="number" id="txtInputSettingsDefaultSaturationGain" min="0" max="4" step="0.1"/>
+              </li>
+            </ul>
+          -->
           </div>
         </div>
         <div class="btns">
@@ -266,6 +275,58 @@
               <div class="piccapContributors avatars"></div>
             </li>
           </ul>
+        </div>
+      </div>
+      <div id="hyperion" class="Hyperion">
+        <div class="sub_title">
+          <p>Hyperion adjustments</p>
+        </div><br/>
+        <div class="settingItems settingItemsNormal" id="settingItemsNormal">
+          <!--
+          <ul>
+            <li><p>_______________________________________________</p></li>
+          </ul><br/>
+          -->
+          <ul>
+            <li>
+              <div class="checkboxes checklabel">
+                <label for="checkSettingsOkla"><b>Hyperion Okla brightness & saturation gain</b><input type="checkbox" id="checkSettingsOkla"/></label><br/>
+              </div>
+            </li>
+          </ul><br/>
+          <ul>
+            <li><p><b>HDR</b></p></li>
+          </ul><br/>
+          <ul>
+            <li>
+              <p>Brightness gain</p>
+              <input type="number" id="txtInputSettingsBrightnessGain" min="0" max="4" step="0.1"/>
+            </li>
+            <li>
+              <p>Saturation gain</p>
+              <input type="number" id="txtInputSettingsSaturationGain" min="0" max="4" step="0.1"/>
+            </li>
+          </ul><br/>
+          <ul>
+            <li><p><b>SDR</b></p></li>
+          </ul><br/>
+          <ul>
+            <li>
+              <p>Brightness gain</p>
+              <input type="number" id="txtInputSettingsDefaultBrightnessGain" min="0" max="4" step="0.1"/>
+            </li>
+            <li>
+              <p>Saturation gain</p>
+              <input type="number" id="txtInputSettingsDefaultSaturationGain" min="0" max="4" step="0.1"/>
+            </li>
+          </ul>
+        </div>
+        <div class="btns">
+          <button onclick="serviceSaveSettings()" id="btnSettingsSave">Save</button>
+        </div>
+        <div class="btns">
+          <button onclick="serviceStart()" id="btnServiceStart">Start capture</button>
+          <button onclick="serviceStop()" id="btnServiceStop">Stop capture</button>
         </div>
       </div>
     </div>
